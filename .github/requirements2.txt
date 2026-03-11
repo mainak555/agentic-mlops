@@ -1,9 +1,9 @@
 # required packages within pipeline
 huggingface_hub==0.34.3
-scikit-learn==1.7.1
-pandas==2.3.1
+scikit-learn==1.8.0
+pandas==2.3.3
 # model building dependencies
-numpy==2.1.2
-mlflow==3.8.1
+numpy==2.4.2
 joblib==1.5.1
+mlflow==3.10.0
 xgboost==3.2.0

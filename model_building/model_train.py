@@ -92,7 +92,7 @@ def evaluate(
                 scoring="f1",
                 n_iter=20,
                 n_jobs=-1,
-                verbose=1,
+                verbose=0,
                 cv=5,
             )
 
