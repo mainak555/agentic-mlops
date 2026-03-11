@@ -9,6 +9,18 @@ import os
 
 ## calling agent ##
 async def get_selection():
+    MLFLOW_EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME")
+    if not MLFLOW_EXPERIMENT_NAME:
+        raise RuntimeError("MLFLOW_EXPERIMENT_NAME not found")
+
+    MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
+    if not MLFLOW_TRACKING_URI:
+        raise RuntimeError("MLFLOW_TRACKING_URI not found")
+
+    PIPELINE_RUN_ID = os.getenv("GITHUB_RUN_ID")
+    if not PIPELINE_RUN_ID:
+        raise RuntimeError("PIPELINE_RUN_ID not found")
+
     ## agent payload ##
     agent_payload = {
         "objective": {
@@ -22,7 +34,7 @@ async def get_selection():
             }
         },
         "pipeline_context": {
-            "experiment_name": os.environ['MLFLOW_EXPERIMENT_NAME'],
+            "experiment_name": MLFLOW_EXPERIMENT_NAME,
             "pipeline_run_id": PIPELINE_RUN_ID,
         },
         "candidates": []
@@ -30,8 +42,8 @@ async def get_selection():
 
     # get mlflow runs
     client = MlflowClient()
-    mlflow.set_tracking_uri(os.environ['MLFLOW_TRACKING_URI'])
-    experiment = client.get_experiment_by_name(os.environ['MLFLOW_EXPERIMENT_NAME'])
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+    experiment = client.get_experiment_by_name(MLFLOW_EXPERIMENT_NAME)
 
     runs = client.search_runs(
         experiment_ids=[experiment.experiment_id], # type: ignore
