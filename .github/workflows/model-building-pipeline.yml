@@ -14,6 +14,7 @@ run-name: >-
 
 env:
   CSV_DATA_FILE: engine_data.csv
+  hf_repo_dir: predictive-maintenance
 
 on:
   push:
@@ -81,7 +82,7 @@ jobs:
           printf "https://user:%s@huggingface.co\n" "$HF_TOKEN" > ~/.git-credentials
           git clone https://huggingface.co/datasets/${HF_REPO}
 
-          cd ./predictive-maintenance
+          cd ./"$hf_repo_dir"
           if git diff --quiet HEAD~1 HEAD -- "$CSV_DATA_FILE"; then
             if [ "$RUN_MODE" == "Full" ]; then
               echo "### Full Run Mode" >> $GITHUB_STEP_SUMMARY
@@ -199,7 +200,7 @@ jobs:
           git config --global user.email "mainak555@github.action"
           git config --global user.name "ui_restart"
 
-          cd ./mlops-tourism
+          cd ./"$hf_repo_dir"
           git commit --allow-empty -m "Restarting from Pipeline: $GITHUB_RUN_ID"
           git push
 
@@ -225,12 +226,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install --no-cache-dir --upgrade huggingface_hub==0.34.3
-
-      - name: Copy Resources
-        run: |
-          mkdir -p ui-app/assets
-          cp banner.png ui-app/assets/
-          cp model_building/util2.py ui-app/
 
       - name: Deploy UI
         run: python ./app-reg.py
