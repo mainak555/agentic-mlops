@@ -29,10 +29,11 @@ def evaluate(
     PIPELINE_RUN_ID: str,
     pipeline_job: str,
     MODEL_CONFIG: dict,
-    X_train: pd.DataFrame,
-    y_train: pd.Series,
-    X_test: pd.DataFrame,
-    y_test: pd.Series,
+    X_train_path: str,
+    y_train_path: str,
+    X_test_path: str,
+    y_test_path: str,
+    input_features: list = [],
     calibrate: bool = False,
     tags: dict = {},
 ) -> dict:
@@ -72,6 +73,25 @@ def evaluate(
     mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
     mlflow.set_experiment(MLFLOW_EXPERIMENT_NAME)
 
+    ## Load the train and test split from the Hugging Face dataset space ##
+    X_train = pd.read_csv(X_train_path)
+    X_test = pd.read_csv(X_test_path)
+    y_train = pd.read_csv(y_train_path)['Engine Condition']
+    y_test = pd.read_csv(y_test_path)['Engine Condition']
+
+    print(f"Split Counts >> Train: {X_train.shape[0]} | Test: {X_test.shape[0]}")
+
+    if len(input_features) > 0:
+        X_train = X_train[input_features]
+        X_test = X_test[input_features]
+
+    train_dataset = mlflow.data.from_pandas( # type: ignore
+        pd.concat([X_train, y_train], axis=1), X_train_path, name="train-split", target='Engine Condition'
+    )
+    test_dataset = mlflow.data.from_pandas( # type: ignore
+        pd.concat([X_test, y_test], axis=1), X_test_path, name="test-split", target='Engine Condition'
+    )
+
     output: dict = {}
     for model_name, cfg in MODEL_CONFIG.items():
         run_name = f"{model_name}_{PIPELINE_RUN_ID}"
@@ -84,6 +104,9 @@ def evaluate(
             tags["pipeline_run_id"] = PIPELINE_RUN_ID
             tags["run_at"] = f"{time.strftime('%Y-%m-%dT%H:%M')}"
             mlflow.set_tags(tags)
+
+            mlflow.log_input(train_dataset, context="training")
+            mlflow.log_input(test_dataset, context="testing")
 
             pipeline = make_pipeline(col_processor, cfg["estimator"])
             search = RandomizedSearchCV(

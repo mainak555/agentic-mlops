@@ -45,14 +45,5 @@ def get_train_test_split():
         except Exception as e:
             raise RuntimeError(f"Error Checking Path: {path} | Err: {e}")
 
-    ## Load the train and test data from the Hugging Face dataset space ##
-    X_train = pd.read_csv(f"hf://datasets/{HF_REPO}/X_train.csv")
-    yTrain = pd.read_csv(f"hf://datasets/{HF_REPO}/y_train.csv")
-    X_test = pd.read_csv(f"hf://datasets/{HF_REPO}/X_test.csv")
-    yTest = pd.read_csv(f"hf://datasets/{HF_REPO}/y_test.csv")
-
-    y_train = yTrain['Engine Condition']
-    y_test = yTest['Engine Condition']
-
-    print(f"Split Counts >> Train: {X_train.shape[0]} | Test: {X_test.shape[0]}")
-    return X_train, y_train, X_test, y_test
+    return f"hf://datasets/{HF_REPO}/X_train.csv", f"hf://datasets/{HF_REPO}/y_train.csv", \
+        f"hf://datasets/{HF_REPO}/X_test.csv", f"hf://datasets/{HF_REPO}/y_test.csv"
