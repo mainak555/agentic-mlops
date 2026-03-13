@@ -63,14 +63,9 @@ top_k_features = [
     f["name"] for f in top_k_artifact["features"]
 ]
 
-if tags.get("sampling", "na") == "over":
-    result_dict = evaluate(PIPELINE_RUN_ID, {
-        model_name: MODEL_CONFIG[model_name] #only selected model
-    }, X_overSampled[top_k_features], y_overSampled, X_test[top_k_features], y_test, True)
-else:
-    result_dict = evaluate(PIPELINE_RUN_ID, {
-        model_name: MODEL_CONFIG[model_name] #only selected model
-    }, X_train[top_k_features], y_train, X_test[top_k_features], y_test, True)
+result_dict = evaluate(PIPELINE_RUN_ID, {
+    model_name: MODEL_CONFIG[model_name] #only selected model
+}, X_train[top_k_features], y_train, X_test[top_k_features], y_test, True)
 
 """result_dict =>
     model_name: {
