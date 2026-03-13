@@ -65,9 +65,8 @@ async def get_selection():
                 "test_precision": data.metrics.get("test_precision"),
             },
             "complexity": {
-                "model_complexity": tags.get("model_complexity"),
+                "model_complexity": data.params.get("model_complexity"),
                 "inference_latency_ms": data.metrics.get("inference_latency_ms"),
-                "total_transformed_features": data.metrics.get("total_transformed_features")
             },
             "feature_profile": {
                 "top_k_features_count": data.metrics.get("top_k_features_count"),

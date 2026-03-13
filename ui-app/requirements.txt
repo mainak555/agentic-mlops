@@ -1,7 +1,7 @@
 #dependencies
-numpy==2.1.2
-pandas==2.3.1
+numpy==2.4.2
+pandas==2.3.3
 joblib==1.5.1
 streamlit==1.53.1
-scikit-learn==1.7.1
+scikit-learn==1.8.0
 huggingface_hub==0.34.3
