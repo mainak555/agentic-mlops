@@ -227,5 +227,11 @@ jobs:
       - name: Install dependencies
         run: pip install --no-cache-dir --upgrade huggingface_hub==0.34.3
 
+      - name: Copy Resources
+        run: |
+          mkdir -p ui-app/assets
+          cp banner.png ui-app/assets/
+          cp model_building/util2.py ui-app/
+
       - name: Deploy UI
         run: python ./app-reg.py
