@@ -7,6 +7,7 @@ import os
 
 # loading dataset from Hugging Face data space
 hfApi = HfApi(token=os.getenv("HF_TOKEN"))
+target = os.getenv('TARGET_VARIABLE', default='Engine Condition')
 DATASET_PATH = f"hf://datasets/{os.getenv("HF_REPO")}/{os.getenv("CSV_DATA_FILE")}"
 
 try:
@@ -25,21 +26,19 @@ print("\033[1mRows: {}\033[0m & \033[1mColumns: {}\033[0m".format(
 # removing unnecessary column(s) & train-test split
 df = df.loc[:, ~df.columns.str.startswith("Unnamed")]
 
-X = df.drop(columns=['Engine Condition'])
-y = df['Engine Condition']
+X = df.drop(columns=[target])
+y = df[target]
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=40, stratify=y
 )
 
 # saving train/test split locally
-X_train.to_csv("X_train.csv",index=False)
-X_test.to_csv("X_test.csv",index=False)
-y_train.to_csv("y_train.csv",index=False)
-y_test.to_csv("y_test.csv",index=False)
+pd.concat([X_train, y_train[target]], axis=1).to_csv("train.csv",index=False)
+pd.concat([X_test, y_test[target]], axis=1).to_csv("test.csv",index=False)
 
 # uploading train and test datasets back to the Hugging Face data space
-for file in ["X_train.csv","X_test.csv","y_train.csv","y_test.csv"]:
+for file in ["train.csv","test.csv"]:
     hfApi.upload_file(
         repo_id=os.getenv('HF_REPO'),
         path_or_fileobj=file,

@@ -9,5 +9,5 @@ PIPELINE_RUN_ID = os.getenv("GITHUB_RUN_ID")
 if not PIPELINE_RUN_ID:
     PIPELINE_RUN_ID = f"local_{uuid.uuid4().hex[:12]}"
 
-X_train_path, y_train_path, X_test_path, y_test_path = get_train_test_split()
-evaluate(PIPELINE_RUN_ID, "model_build", MODEL_CONFIG, X_train_path, y_train_path, X_test_path, y_test_path)
+train_split_path, test_split_path = get_train_test_split()
+evaluate(PIPELINE_RUN_ID, "model_build", MODEL_CONFIG, train_split_path, test_split_path)

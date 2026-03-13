@@ -35,7 +35,7 @@ def get_train_test_split():
     hfApi = HfApi(token=os.getenv("HF_TOKEN"))
 
     # Checking train/test splits are present or not
-    files = ["X_train", "y_train", "X_test", "y_test"]
+    files = ["train", "test"]
     for f in files:
         path = f"hf://datasets/{HF_REPO}/{f}.csv"
         try:
@@ -45,5 +45,5 @@ def get_train_test_split():
         except Exception as e:
             raise RuntimeError(f"Error Checking Path: {path} | Err: {e}")
 
-    return f"hf://datasets/{HF_REPO}/X_train.csv", f"hf://datasets/{HF_REPO}/y_train.csv", \
-        f"hf://datasets/{HF_REPO}/X_test.csv", f"hf://datasets/{HF_REPO}/y_test.csv"
+    return f"https://huggingface.co/datasets/{HF_REPO}/resolve/main/train.csv", \
+        f"https://huggingface.co/datasets/{HF_REPO}/resolve/main/test.csv",

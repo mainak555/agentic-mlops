@@ -29,10 +29,8 @@ def evaluate(
     PIPELINE_RUN_ID: str,
     pipeline_job: str,
     MODEL_CONFIG: dict,
-    X_train_path: str,
-    y_train_path: str,
-    X_test_path: str,
-    y_test_path: str,
+    train_split_path: str,
+    test_split_path: str,
     input_features: list = [],
     calibrate: bool = False,
     tags: dict = {},
@@ -74,23 +72,27 @@ def evaluate(
     mlflow.set_experiment(MLFLOW_EXPERIMENT_NAME)
 
     ## Load the train and test split from the Hugging Face dataset space ##
-    X_train = pd.read_csv(X_train_path)
-    X_test = pd.read_csv(X_test_path)
-    y_train = pd.read_csv(y_train_path)['Engine Condition']
-    y_test = pd.read_csv(y_test_path)['Engine Condition']
+    train_split = pd.read_csv(train_split_path)
+    test_split = pd.read_csv(test_split_path)
 
-    print(f"Split Counts >> Train: {X_train.shape[0]} | Test: {X_test.shape[0]}")
+    target = os.getenv('TARGET_VARIABLE', default='Engine Condition')
+    print(f"Split Counts >> Train: {train_split.shape[0]} | Test: {test_split.shape[0]}")    
+
+    train_dataset = mlflow.data.from_pandas( # type: ignore
+        train_split, train_split_path, name="train-split", targets=target
+    )
+    test_dataset = mlflow.data.from_pandas( # type: ignore
+        test_split, test_split_path, name="test-split", targets=target
+    )
+
+    X_train = train_split.drop(columns=[target])
+    y_train = train_split[target]
+    X_test = test_split.drop(columns=[target])
+    y_test = test_split[target]
 
     if len(input_features) > 0:
         X_train = X_train[input_features]
         X_test = X_test[input_features]
-
-    train_dataset = mlflow.data.from_pandas( # type: ignore
-        pd.concat([X_train, y_train], axis=1), X_train_path, name="train-split", targets='Engine Condition'
-    )
-    test_dataset = mlflow.data.from_pandas( # type: ignore
-        pd.concat([X_test, y_test], axis=1), X_test_path, name="test-split", targets='Engine Condition'
-    )
 
     output: dict = {}
     for model_name, cfg in MODEL_CONFIG.items():
@@ -117,7 +119,7 @@ def evaluate(
                 n_iter=20,
                 n_jobs=-1,
                 verbose=0,
-                cv=5,
+                cv=8,
             )
 
             search.fit(X_train, y_train)

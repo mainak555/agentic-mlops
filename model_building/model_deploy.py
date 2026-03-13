@@ -63,10 +63,10 @@ top_k_features = [
     f["name"] for f in top_k_artifact["features"]
 ]
 
-X_train_path, y_train_path, X_test_path, y_test_path = get_train_test_split()
+train_split_path, test_split_path = get_train_test_split()
 result_dict = evaluate(PIPELINE_RUN_ID, {
     model_name: MODEL_CONFIG[model_name] #only selected model
-}, X_train_path, y_train_path, X_test_path, y_test_path, top_k_features, True)
+}, train_split_path, test_split_path, top_k_features, True)
 
 """result_dict =>
     model_name: {
