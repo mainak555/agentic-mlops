@@ -27,10 +27,7 @@ import os
 
 ## train test split from HF ##
 def get_train_test_split():
-    from huggingface_hub import HfApi
-
     HF_REPO = os.getenv("HF_REPO")
-    hfApi = HfApi(token=os.getenv("HF_TOKEN"))
 
     # Checking train/test splits are present or not
     files = ["train", "test"]

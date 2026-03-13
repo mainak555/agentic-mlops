@@ -1,7 +1,6 @@
 
 from xgboost import XGBClassifier
 import time
-import os
 
 ## model complexity & performance ##
 def extract_model_structure(model):
