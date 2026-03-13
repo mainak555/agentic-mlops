@@ -15,6 +15,7 @@ run-name: >-
 env:
   CSV_DATA_FILE: engine_data.csv
   hf_repo_dir: predictive-maintenance
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 on:
   push:
