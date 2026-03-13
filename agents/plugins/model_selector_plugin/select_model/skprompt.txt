@@ -17,12 +17,12 @@ Selection Policy:
   - min_recall: 0.9
   - min_precision: 0.66
 - Tie breakers (in order):
-  - model_complexity
-  - inference_latency_ms
-  - top_k_features_count
   - coverage_pct
+  - model_complexity
+  - top_k_features_count
+  - inference_latency_ms
 
-Output JSON Schema:
+Output Schema:
 - {
   selected_model_name: str,
   selected_mlflow_run_id: str,
@@ -30,7 +30,7 @@ Output JSON Schema:
 }
 
 Rules:
-- You MUST return ONLY a JSON object that strictly conforms to prescribed SCHEMA.
+- You MUST return ONLY a JSON object that strictly conforms to prescribed Output SCHEMA.
 - Do NOT include nested objects, audit trails, or candidate lists.
 - Do NOT include explanations outside the justification field.
 - Justification must be concise (maximum length 160 characters) in text only.

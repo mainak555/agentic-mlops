@@ -21,7 +21,6 @@ async def get_selection():
     if not PIPELINE_RUN_ID:
         raise RuntimeError("PIPELINE_RUN_ID not found")
 
-    PIPELINE_RUN_ID = '23046450942'
     ## agent payload ##
     agent_payload = {
         "objective": {
