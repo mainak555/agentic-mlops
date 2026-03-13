@@ -64,7 +64,7 @@ top_k_features = [
 ]
 
 train_split_path, test_split_path = get_train_test_split()
-result_dict = evaluate(PIPELINE_RUN_ID, {
+result_dict = evaluate(PIPELINE_RUN_ID, "model_deploy", {
     model_name: MODEL_CONFIG[model_name] #only selected model
 }, train_split_path, test_split_path, top_k_features, True)
 

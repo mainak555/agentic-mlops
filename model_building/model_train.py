@@ -79,10 +79,10 @@ def evaluate(
     print(f"Split Counts >> Train: {train_split.shape[0]} | Test: {test_split.shape[0]}")    
 
     train_dataset = mlflow.data.from_pandas( # type: ignore
-        train_split, train_split_path, name="train-split", targets=target
+        train_split, train_split_path, name="train", targets=target
     )
     test_dataset = mlflow.data.from_pandas( # type: ignore
-        test_split, test_split_path, name="test-split", targets=target
+        test_split, test_split_path, name="test", targets=target
     )
 
     X_train = train_split.drop(columns=[target])
