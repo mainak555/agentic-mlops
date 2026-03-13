@@ -80,15 +80,15 @@ if submit:
         pred = (proba >= decision_threshold).astype(int)
 
         st.divider()
-        st.subheader("Prediction:")
+        st.subheader("Maintenance:")
         res_col1, res_col2 = st.columns([1, 2])
         with res_col1:
             if pred == 1:
                 confidence = proba[0] * 100
-                st.success("### YES")                
+                st.error("### Required")                
             else:
                 confidence = (1 - proba[0]) * 100
-                st.error("### NO")
+                st.success("### Not-Required")
         with res_col2:
             st.write(f"**Model Certainty:**")
             st.progress(proba[0] if pred == 1 else 1 - proba[0], text=f"Confidence: {round(confidence, 2)}%")
