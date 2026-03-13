@@ -86,10 +86,10 @@ def evaluate(
         X_test = X_test[input_features]
 
     train_dataset = mlflow.data.from_pandas( # type: ignore
-        pd.concat([X_train, y_train], axis=1), X_train_path, name="train-split", target='Engine Condition'
+        pd.concat([X_train, y_train], axis=1), X_train_path, name="train-split", targets='Engine Condition'
     )
     test_dataset = mlflow.data.from_pandas( # type: ignore
-        pd.concat([X_test, y_test], axis=1), X_test_path, name="test-split", target='Engine Condition'
+        pd.concat([X_test, y_test], axis=1), X_test_path, name="test-split", targets='Engine Condition'
     )
 
     output: dict = {}
