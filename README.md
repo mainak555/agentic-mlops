@@ -1,5 +1,20 @@
 ![Predictive Maintenance for Engine Health Monitoring](banner.png)
 
+## Technical Introduction
+
+This repository implements an agent-driven MLOps workflow for predictive maintenance classification. The pipeline trains multiple candidate models, logs and evaluates each run in MLflow, applies agentic policy-based model selection, deploys the selected model artifact to Hugging Face, generates a UI input schema using a schema agent, and serves predictions through a dynamic Streamlit form that reads schema metadata at runtime.
+
+The design is intentionally decoupled so model and feature-set changes can be propagated through deployment artifacts without repeated UI form rewrites.
+
+## Documentation
+
+- [Technical Documentations](docs/README.md)
+- [Architecture](docs/architecture.md)
+- [Deployment and Development](docs/deployment-development.md)
+- [Project Charter](docs/project-charter-novelty.md)
+- [Data Drift](docs/data-drift-handling.md)
+- [Pipeline Deployment](docs/pipeline-deployment-options.md)
+
 **Business Context:**  
 Vehicle breakdowns and engine failures lead to significant financial losses for both individual owners and fleet operators. Unexpected engine failures can cause expensive repairs, operational downtime, and safety risks. Predictive maintenance in the automotive industry can help minimize these issues by leveraging sensor data to forecast potential failures before they occur. 
 
