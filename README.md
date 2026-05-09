@@ -15,7 +15,7 @@ The design is intentionally decoupled so model and feature-set changes can be pr
 - [Data Drift](docs/data-drift-handling.md)
 - [Pipeline Deployment](docs/pipeline-deployment-options.md)
 
-**Business Context:**  
+## Business Context
 Vehicle breakdowns and engine failures lead to significant financial losses for both individual owners and fleet operators. Unexpected engine failures can cause expensive repairs, operational downtime, and safety risks. Predictive maintenance in the automotive industry can help minimize these issues by leveraging sensor data to forecast potential failures before they occur. 
 
 Automobile manufacturers, fleet managers, and service providers aim to develop data-driven solutions to improve engine reliability and optimize maintenance schedules. By analyzing engine health parameters such as RPM, temperature, pressure, and other sensor readings, machine learning models can be trained to predict when an engine requires maintenance, allowing proactive intervention before a failure occurs. 
