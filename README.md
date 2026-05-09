@@ -1,4 +1,4 @@
-![Predictive Maintenance for Engine Health Monitoring](banner.png)
+![Predictive Maintenance for Engine Health Monitoring](agent-mlops.png)
 
 ## Technical Introduction
 
