@@ -10,7 +10,7 @@ The design is intentionally decoupled so model and feature-set changes can be pr
 
 - [Architecture](docs/architecture.md)
 - [Deployment and Development](docs/deployment-development.md)
-- [Project Charter](docs/project-charter-novelty.md)
+- [Project Charter](docs/project-charter.md)
 - [Data Drift](docs/data-drift-handling.md)
 - [Pipeline Deployment](docs/pipeline-deployment-options.md)
 
