@@ -8,7 +8,6 @@ The design is intentionally decoupled so model and feature-set changes can be pr
 
 ## Documentation
 
-- [Technical Documentations](docs/README.md)
 - [Architecture](docs/architecture.md)
 - [Deployment and Development](docs/deployment-development.md)
 - [Project Charter](docs/project-charter-novelty.md)

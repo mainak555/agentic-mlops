@@ -47,7 +47,7 @@ flowchart TD
 	D --> X[External HF Webhook Relay Service<br/>separate repository/service]
 	X --> E2[RepoDispatch Trigger<br/>repository_dispatch hf_webhook_event]
 
-	E1[Direct Trigger<br/>push | workflow_dispatch] --> F[Run Mode Resolution<br/>.github/workflows/model-building-pipeline.yml]
+	E1[Direct Trigger<br/>push / workflow_dispatch] --> F[Run Mode Resolution<br/>.github/workflows/model-building-pipeline.yml]
 	E2 --> F
 	D --> G[Data Clean + Split<br/>model_building/train_test_split.py]
 	F --> G
